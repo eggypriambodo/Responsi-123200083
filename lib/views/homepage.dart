@@ -19,18 +19,25 @@ class _HomepageState extends State<Homepage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              child: Image.network('https://cdn.cnnindonesia.com/cnnid/images/logo_cnn_fav.png'),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.network(
+                'https://cdn.cnnindonesia.com/cnnid/images/logo_cnn_fav.png',
+                width: 200,
+                height: 200,
+                fit: BoxFit.cover,
+              ),
             ),
             SizedBox(height: 50,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: MediaQuery.of(context).size.width/4,
+                  width: MediaQuery.of(context).size.width/3,
+                  height: 40,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.redAccent,
+                      primary: Colors.red,
                     ),
                       onPressed: (){
 
@@ -38,22 +45,23 @@ class _HomepageState extends State<Homepage> {
                             MaterialPageRoute(builder:
                                 (context)=> Terbaru()));
                       },
-                      child: Text('Terbaru')
+                      child: Text('TERBARU')
                   ),
                 ),
                 SizedBox(width: 15,),
                 Container(
-                  width: MediaQuery.of(context).size.width/4,
+                  width: MediaQuery.of(context).size.width/3,
+                  height: 40,
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          primary: Colors.redAccent
+                          primary: Colors.red
                       ),
                       onPressed: (){
                         Navigator.push(context,
                             MaterialPageRoute(builder:
                                 (context)=> Nasional()));
                       },
-                      child: Text('Nasional')
+                      child: Text('NASIONAL')
                   ),
                 ),
               ],
@@ -63,32 +71,34 @@ class _HomepageState extends State<Homepage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: MediaQuery.of(context).size.width/4,
+                  width: MediaQuery.of(context).size.width/3,
+                  height: 40,
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          primary: Colors.redAccent
+                          primary: Colors.red
                       ),
                       onPressed: (){
                         Navigator.push(context,
                             MaterialPageRoute(builder:
                                 (context)=> Olahraga()));
                       },
-                      child: Text('Olahraga')
+                      child: Text('OLAHRAGA')
                   ),
                 ),
                 SizedBox(width: 15,),
                 Container(
-                  width: MediaQuery.of(context).size.width/4,
+                  width: MediaQuery.of(context).size.width/3,
+                  height: 40,
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          primary: Colors.redAccent
+                          primary: Colors.red
                       ),
                       onPressed: (){
                         Navigator.push(context,
                             MaterialPageRoute(builder:
                                 (context)=> Teknologi()));
                       },
-                      child: Text('Teknologi')
+                      child: Text('TEKNOLOGI',)
                   ),
                 ),
               ],

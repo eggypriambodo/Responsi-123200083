@@ -1,100 +1,87 @@
-// To parse this JSON data, do
-//
-//     final berita = beritaFromJson(jsonString);
+class ListNewsModel {
+  bool? success;
+  String? message;
+  Data? data;
 
-import 'dart:convert';
+  ListNewsModel({this.success, this.message, this.data});
 
-Berita beritaFromJson(String str) => Berita.fromJson(json.decode(str));
+  ListNewsModel.fromJson(Map<String, dynamic> json) {
+    success = json['success'];
+    message = json['message'];
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+  }
 
-String beritaToJson(Berita data) => json.encode(data.toJson());
-
-class Berita {
-  bool success;
-  dynamic message;
-  Data data;
-  Post posts;
-
-  Berita({
-    required this.success,
-    this.message,
-    required this.data,
-    required this.posts
-  });
-
-  factory Berita.fromJson(Map<String, dynamic> json) => Berita(
-    success: json["success"],
-    message: json["message"],
-    data: Data.fromJson(json["data"]), 
-    posts: Post.fromJson(json["posts"]),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "success": success,
-    "message": message,
-    "data": data.toJson(),
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['success'] = success;
+    data['message'] = message;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    return data;
+  }
 }
 
 class Data {
-  String link;
-  String description;
-  String title;
-  String image;
-  List<Post> posts;
+  String? link;
+  String? description;
+  String? title;
+  String? image;
+  List<Posts>? posts;
 
-  Data({
-    required this.link,
-    required this.description,
-    required this.title,
-    required this.image,
-    required this.posts,
-  });
+  Data({this.link, this.description, this.title, this.image, this.posts});
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-    link: json["link"],
-    description: json["description"],
-    title: json["title"],
-    image: json["image"],
-    posts: List<Post>.from(json["posts"].map((x) => Post.fromJson(x))),
-  );
+  Data.fromJson(Map<String, dynamic> json) {
+    link = json['link'];
+    description = json['description'];
+    title = json['title'];
+    image = json['image'];
+    if (json['posts'] != null) {
+      posts = <Posts>[];
+      json['posts'].forEach((v) {
+        posts!.add(Posts.fromJson(v));
+      });
+    }
+  }
 
-  Map<String, dynamic> toJson() => {
-    "link": link,
-    "description": description,
-    "title": title,
-    "image": image,
-    "posts": List<dynamic>.from(posts.map((x) => x.toJson())),
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['link'] = link;
+    data['description'] = description;
+    data['title'] = title;
+    data['image'] = image;
+    if (posts != null) {
+      data['posts'] = posts!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
-class Post {
-  String link;
-  String title;
-  DateTime pubDate;
-  String description;
-  String thumbnail;
+class Posts {
+  String? link;
+  String? title;
+  String? pubDate;
+  String? description;
+  String? thumbnail;
 
-  Post({
-    required this.link,
-    required this.title,
-    required this.pubDate,
-    required this.description,
-    required this.thumbnail,
-  });
+  Posts(
+      {this.link, this.title, this.pubDate, this.description, this.thumbnail});
 
-  factory Post.fromJson(Map<String, dynamic> json) => Post(
-    link: json["link"],
-    title: json["title"],
-    pubDate: DateTime.parse(json["pubDate"]),
-    description: json["description"],
-    thumbnail: json["thumbnail"],
-  );
+  Posts.fromJson(Map<String, dynamic> json) {
+    link = json['link'];
+    title = json['title'];
+    pubDate = json['pubDate'];
+    description = json['description'];
+    thumbnail = json['thumbnail'];
+  }
 
-  Map<String, dynamic> toJson() => {
-    "link": link,
-    "title": title,
-    "pubDate": pubDate.toIso8601String(),
-    "description": description,
-    "thumbnail": thumbnail,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['link'] = link;
+    data['title'] = title;
+    data['pubDate'] = pubDate;
+    data['description'] = description;
+    data['thumbnail'] = thumbnail;
+    return data;
+  }
 }

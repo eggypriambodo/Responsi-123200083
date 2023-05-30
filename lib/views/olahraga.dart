@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:responsi_123200083/model/list_news_model.dart';
 import 'package:responsi_123200083/service/base_network.dart';
+import 'package:responsi_123200083/views/detail_news.dart';
 
 class Olahraga extends StatefulWidget {
   @override
@@ -14,28 +15,58 @@ class _OlahragaState extends State<Olahraga> {
     return Scaffold(
       appBar: AppBar(
         title: Text('CNN OLAHRAGA'),
+        centerTitle: true,
       ),
       body: Container(
         child: FutureBuilder(
-          future: BaseNetwork.getList('olahraga'),
+          future: BaseNetwork.get('olahraga'),
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
-              List<Berita> datas = [];
-              for (var item in snapshot.data) {
-                datas.add(Berita.fromJson(item));
-              }
+              ListNewsModel berita = ListNewsModel.fromJson(snapshot.data);
               return ListView.builder(
-                itemCount: datas.length,
+                itemCount: berita.data!.posts!.length,
                 itemBuilder: (context, index){
-                  Berita berita = datas[index];
                   return Card(
-                    child: ListTile(
-                      onTap: (){},
-                      leading: Image.network(
-                        '${berita.data.image.toLowerCase()}',
-                        errorBuilder: (context, error, stackTrace) =>
-                        const Icon(Icons.error),),
-                      title: Text(berita.data.title),
+                    child: GestureDetector(
+                      onTap: (){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailBerita(
+                                title: berita.data!.posts![index].title!,
+                                pubDate:
+                                berita.data!.posts![index].pubDate!,
+                                thumbnail:
+                                berita.data!.posts![index].thumbnail!,
+                                description:
+                                berita.data!.posts![index].description!,
+                                link: berita.data!.posts![index].link!,
+                              ),
+                            ));
+                      },
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image.network(
+                            '${berita.data!.posts![index].thumbnail!.toLowerCase()}',
+                            errorBuilder: (context, error, stackTrace) =>
+                            const Icon(Icons.error),
+                            width: 250,
+                            height: 125,
+                          ),
+                          Expanded(
+                            child: Container(
+                                padding: EdgeInsets.only(
+                                    left: 7, right: 7, top: 10
+                                ),
+                                child: Text(berita.data!.posts![index].title!,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15
+                                  ),)),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },
